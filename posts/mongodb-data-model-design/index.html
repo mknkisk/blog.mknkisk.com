@@ -1,0 +1,57 @@
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.68.3"><link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/amzrk2/poal-jsdelivr@1.2.0/favicons/favicon.ico><title>MongoDB データモデルデザイン - mknkisk.log</title><meta name=author content><meta name=description content="MongoDB 公式ドキュメントから抜粋
+##Env / Versions
+ MongoDB v3.6  Embedded Data Models (埋め込みモデル) Example:
+{ _id: <ObjectId1>, username: &#34;123xyz&#34;, contact: { phone: &#34;123-456-7890&#34;, email: &#34;xyz@example.com&#34; }, access: { level: 5, group: &#34;dev&#34; } }  非正規化モデル より少ないクエリとアップデートで済む 次のような時に使用する ・エンティティ間に「包含」関係がある。1対1の関係 ・エンティティ間に1対多の関係がある。子ドキュメントは常に親ドキュメントのコンテキストで表現される 🙆‍♀️ Strengths ・単一のデータベースから関連するデータを取得するのと同じように、参照操作のパフォーマンスを向上させうる ・1回のアトミックな更新操作で関連するデータを更新することができる 🤦‍♀️ Weaknesses ・関連データをドキュメントに埋め込むと、作成後にドキュメントサイズが大きくなる ・MMAPv1ストレージエンジンを使用すると、ドキュメントの増大が書き込みのパフォーマンスに影響を与え、データの断片化を招く可能性がある ・📝 ドキュメントのサイズは最大で 16 megabytes  Normalized Data Models (参照モデル) Example:
+// user document { _id: <ObjectId1>, username: &#34;123xyz&#34; } // contact document { _id: <ObjectId2>, user_id: <ObjectId1>, phone: &#34;123-456-7890&#34;, email: &#34;xyz@example."><meta property="og:title" content="MongoDB データモデルデザイン"><meta property="og:description" content="MongoDB 公式ドキュメントから抜粋
+##Env / Versions
+ MongoDB v3.6  Embedded Data Models (埋め込みモデル) Example:
+{ _id: <ObjectId1>, username: &#34;123xyz&#34;, contact: { phone: &#34;123-456-7890&#34;, email: &#34;xyz@example.com&#34; }, access: { level: 5, group: &#34;dev&#34; } }  非正規化モデル より少ないクエリとアップデートで済む 次のような時に使用する ・エンティティ間に「包含」関係がある。1対1の関係 ・エンティティ間に1対多の関係がある。子ドキュメントは常に親ドキュメントのコンテキストで表現される 🙆‍♀️ Strengths ・単一のデータベースから関連するデータを取得するのと同じように、参照操作のパフォーマンスを向上させうる ・1回のアトミックな更新操作で関連するデータを更新することができる 🤦‍♀️ Weaknesses ・関連データをドキュメントに埋め込むと、作成後にドキュメントサイズが大きくなる ・MMAPv1ストレージエンジンを使用すると、ドキュメントの増大が書き込みのパフォーマンスに影響を与え、データの断片化を招く可能性がある ・📝 ドキュメントのサイズは最大で 16 megabytes  Normalized Data Models (参照モデル) Example:
+// user document { _id: <ObjectId1>, username: &#34;123xyz&#34; } // contact document { _id: <ObjectId2>, user_id: <ObjectId1>, phone: &#34;123-456-7890&#34;, email: &#34;xyz@example."><meta property="og:type" content="article"><meta property="og:url" content="https://blog.mknkisk.com/posts/mongodb-data-model-design/"><meta property="article:published_time" content="2018-06-04T23:51:00+09:00"><meta property="article:modified_time" content="2018-06-04T23:51:00+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="MongoDB データモデルデザイン"><meta name=twitter:description content="MongoDB 公式ドキュメントから抜粋
+##Env / Versions
+ MongoDB v3.6  Embedded Data Models (埋め込みモデル) Example:
+{ _id: <ObjectId1>, username: &#34;123xyz&#34;, contact: { phone: &#34;123-456-7890&#34;, email: &#34;xyz@example.com&#34; }, access: { level: 5, group: &#34;dev&#34; } }  非正規化モデル より少ないクエリとアップデートで済む 次のような時に使用する ・エンティティ間に「包含」関係がある。1対1の関係 ・エンティティ間に1対多の関係がある。子ドキュメントは常に親ドキュメントのコンテキストで表現される 🙆‍♀️ Strengths ・単一のデータベースから関連するデータを取得するのと同じように、参照操作のパフォーマンスを向上させうる ・1回のアトミックな更新操作で関連するデータを更新することができる 🤦‍♀️ Weaknesses ・関連データをドキュメントに埋め込むと、作成後にドキュメントサイズが大きくなる ・MMAPv1ストレージエンジンを使用すると、ドキュメントの増大が書き込みのパフォーマンスに影響を与え、データの断片化を招く可能性がある ・📝 ドキュメントのサイズは最大で 16 megabytes  Normalized Data Models (参照モデル) Example:
+// user document { _id: <ObjectId1>, username: &#34;123xyz&#34; } // contact document { _id: <ObjectId2>, user_id: <ObjectId1>, phone: &#34;123-456-7890&#34;, email: &#34;xyz@example."><link rel=stylesheet href=https://blog.mknkisk.com/css/main.min.css><script src=https://blog.mknkisk.com/js/jquery.min.js></script><script src=https://blog.mknkisk.com/js/lazysizes.min.js></script><link rel=stylesheet href=https://blog.mknkisk.com/css/fontawsome.min.css><script src=https://blog.mknkisk.com/js/medium-zoom.min.js></script><body class="d-flex flex-column h-100"><header><div class="container-lg clearfix"><div class="col-12 link-primary"><a class=main-title href=https://blog.mknkisk.com/>mknkisk.log</a></div></div></header><main><div class="container-lg clearfix"><div class="col-md-9 col-12 float-left" id=content><article><h4 class=post-title><a href=https://blog.mknkisk.com/posts/mongodb-data-model-design/>MongoDB データモデルデザイン</a></h4><div class="post-meta link-alter"><time><i class="fas fa-calendar-day"></i>&nbsp;2018-06-04</time><span><i class="fas fa-tag"></i>&nbsp;No tag</span></div><div class="post-content markdown-body"><p>MongoDB 公式ドキュメントから抜粋</p><p>##Env / Versions</p><ul><li>MongoDB v3.6</li></ul><h2 id=embedded-data-models-埋め込みモデル>Embedded Data Models (埋め込みモデル)</h2><p>Example:</p><pre><code>{
+  _id: &lt;ObjectId1&gt;,
+  username: &quot;123xyz&quot;,
+  contact: {
+    phone: &quot;123-456-7890&quot;,
+    email: &quot;xyz@example.com&quot;
+  },
+  access: {
+    level: 5,
+    group: &quot;dev&quot;
+  }
+}
+</code></pre><ul><li>非正規化モデル</li><li>より少ないクエリとアップデートで済む</li><li>次のような時に使用する
+・エンティティ間に「包含」関係がある。1対1の関係
+・エンティティ間に1対多の関係がある。子ドキュメントは常に親ドキュメントのコンテキストで表現される</li><li>🙆‍♀️ Strengths
+・単一のデータベースから関連するデータを取得するのと同じように、参照操作のパフォーマンスを向上させうる
+・1回のアトミックな更新操作で関連するデータを更新することができる</li><li>🤦‍♀️ Weaknesses
+・関連データをドキュメントに埋め込むと、作成後にドキュメントサイズが大きくなる
+・MMAPv1ストレージエンジンを使用すると、ドキュメントの増大が書き込みのパフォーマンスに影響を与え、データの断片化を招く可能性がある
+・📝 ドキュメントのサイズは最大で 16 megabytes</li></ul><h2 id=normalized-data-models-参照モデル>Normalized Data Models (参照モデル)</h2><p>Example:</p><pre><code>// user document
+{
+  _id: &lt;ObjectId1&gt;,
+  username: &quot;123xyz&quot;
+}
+
+// contact document
+{
+  _id: &lt;ObjectId2&gt;,
+  user_id: &lt;ObjectId1&gt;,
+  phone: &quot;123-456-7890&quot;,
+  email: &quot;xyz@example.com&quot;
+}
+
+// access document
+{
+  _id: &lt;ObjectId3&gt;,
+  user_id: &lt;ObjectId1&gt;,
+  level: 5,
+  group: &quot;dev&quot;
+}
+</code></pre><ul><li>正規化モデル</li><li>次のような時に使用する
+・embedded による読み込みのパフォーマンスのメリットがデータが重複してしまうデメリットを上回らないとき
+・より複雑な多対多の関係を表現するとき
+・大きな階層化されたデータセットをモデル化するとき</li><li>参照モデルは埋め込みモデルよりもフレキシブル。</li><li>ただし、クライアント側アプリケーションは、参照モデルを解決するためにフォローアップクエリを発行する必要がある。
+・ 📝ドキュメント間の関連性の解決はクライアント側が担う(JOINとかないので、複数クエリの発行が必要)</li><li>正規化されたデータモデルでは、サーバーへのより多くのラウンドトリップが必要になる可能性がある</li></ul><h2 id=links>Links</h2><p><a href=https://docs.mongodb.com/manual/core/data-model-design/ target=_blank>Data Model Design — MongoDB Manual</a></p></div></article><div class="license markdown-body"><blockquote><p>Unless otherwise noted, the content of this site is licensed under <a rel=license href target=_blank></a>.</p></blockquote></div></div><div class="col-md-3 col-12 float-left link-alter" id=sidebar><div class=widget-toc><h5>TOC</h5><nav id=TableOfContents><ul><li><a href=#embedded-data-models-埋め込みモデル>Embedded Data Models (埋め込みモデル)</a></li><li><a href=#normalized-data-models-参照モデル>Normalized Data Models (参照モデル)</a></li><li><a href=#links>Links</a></li></ul></nav></div><div class=widget-pages><h5>Pages</h5><ul><li><a href=/index.xml target=_blank>RSS</a></li></ul></div><div class=widget-tags><h5>Tags</h5><div></div></div><div class=widget-links><h5>Links</h5><ul></ul></div></div></div></main><footer><div class="container-lg text-center"><p>&copy; 2020 <a href=https://blog.mknkisk.com/></a>| Powered by <a href=https://github.com/amzrk2/hugo-theme-fuji/ target=_blank>Fuji</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></p></div></footer><script>$(function(){mediumZoom('.img-zoomable',{margin:32});});</script><script>$('.widget-toc a').click(function(){$('html, body').animate({scrollTop:$($(this).attr('href')).offset().top});});</script></body></html>

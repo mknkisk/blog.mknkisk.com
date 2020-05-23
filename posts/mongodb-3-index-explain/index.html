@@ -1,0 +1,202 @@
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.68.3"><link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/amzrk2/poal-jsdelivr@1.2.0/favicons/favicon.ico><title>MongoDB 3.x インデックス生成前後のexplain()結果を読む - mknkisk.log</title><meta name=author content><meta name=description content="はじめに MongoDB 3.0 から explain() の出力結果が変わり、読み解くのに時間がかかってしまいました。 今回はインデックスの生成前後で explain() の結果がどう変わるかを確認してみます。
+環境  Mac OS X 10.10.3 MongoDB 3.0.2 MongoDB storage engine: mmapv1 (default)  サンプルデータの準備 DBを用意 $ mongo > use sample_db switched to db sample_db サンプルデータ追加 とりあえず10万件のドキュメントを生成しておきます。
+> for (var i=0; i < 100000; i++) { ... db.items.insert({ name: 'item_' + i, price: 100 + i }) ... } > db.items.count() 100000 インデックスが無い状態 itemsコレクションから119円の商品を探すクエリを実行します。
+> db.items.find({price: 119}).explain(&#34;executionStats&#34;) { &#34;queryPlanner&#34; : { &#34;plannerVersion&#34; : 1, &#34;namespace&#34; : &#34;sample_db."><meta property="og:title" content="MongoDB 3.x インデックス生成前後のexplain()結果を読む"><meta property="og:description" content="はじめに MongoDB 3.0 から explain() の出力結果が変わり、読み解くのに時間がかかってしまいました。 今回はインデックスの生成前後で explain() の結果がどう変わるかを確認してみます。
+環境  Mac OS X 10.10.3 MongoDB 3.0.2 MongoDB storage engine: mmapv1 (default)  サンプルデータの準備 DBを用意 $ mongo > use sample_db switched to db sample_db サンプルデータ追加 とりあえず10万件のドキュメントを生成しておきます。
+> for (var i=0; i < 100000; i++) { ... db.items.insert({ name: 'item_' + i, price: 100 + i }) ... } > db.items.count() 100000 インデックスが無い状態 itemsコレクションから119円の商品を探すクエリを実行します。
+> db.items.find({price: 119}).explain(&#34;executionStats&#34;) { &#34;queryPlanner&#34; : { &#34;plannerVersion&#34; : 1, &#34;namespace&#34; : &#34;sample_db."><meta property="og:type" content="article"><meta property="og:url" content="https://blog.mknkisk.com/posts/mongodb-3-index-explain/"><meta property="article:published_time" content="2015-05-10T15:16:00+09:00"><meta property="article:modified_time" content="2015-05-10T15:16:00+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="MongoDB 3.x インデックス生成前後のexplain()結果を読む"><meta name=twitter:description content="はじめに MongoDB 3.0 から explain() の出力結果が変わり、読み解くのに時間がかかってしまいました。 今回はインデックスの生成前後で explain() の結果がどう変わるかを確認してみます。
+環境  Mac OS X 10.10.3 MongoDB 3.0.2 MongoDB storage engine: mmapv1 (default)  サンプルデータの準備 DBを用意 $ mongo > use sample_db switched to db sample_db サンプルデータ追加 とりあえず10万件のドキュメントを生成しておきます。
+> for (var i=0; i < 100000; i++) { ... db.items.insert({ name: 'item_' + i, price: 100 + i }) ... } > db.items.count() 100000 インデックスが無い状態 itemsコレクションから119円の商品を探すクエリを実行します。
+> db.items.find({price: 119}).explain(&#34;executionStats&#34;) { &#34;queryPlanner&#34; : { &#34;plannerVersion&#34; : 1, &#34;namespace&#34; : &#34;sample_db."><link rel=stylesheet href=https://blog.mknkisk.com/css/main.min.css><script src=https://blog.mknkisk.com/js/jquery.min.js></script><script src=https://blog.mknkisk.com/js/lazysizes.min.js></script><link rel=stylesheet href=https://blog.mknkisk.com/css/fontawsome.min.css><script src=https://blog.mknkisk.com/js/medium-zoom.min.js></script><body class="d-flex flex-column h-100"><header><div class="container-lg clearfix"><div class="col-12 link-primary"><a class=main-title href=https://blog.mknkisk.com/>mknkisk.log</a></div></div></header><main><div class="container-lg clearfix"><div class="col-md-9 col-12 float-left" id=content><article><h4 class=post-title><a href=https://blog.mknkisk.com/posts/mongodb-3-index-explain/>MongoDB 3.x インデックス生成前後のexplain()結果を読む</a></h4><div class="post-meta link-alter"><time><i class="fas fa-calendar-day"></i>&nbsp;2015-05-10</time><span><i class="fas fa-tag"></i>&nbsp;No tag</span></div><div class="post-content markdown-body"><h2 id=はじめに>はじめに</h2><p>MongoDB 3.0 から explain() の出力結果が変わり、読み解くのに時間がかかってしまいました。
+今回はインデックスの生成前後で explain() の結果がどう変わるかを確認してみます。</p><h2 id=環境>環境</h2><ul><li>Mac OS X 10.10.3</li><li>MongoDB 3.0.2</li><li>MongoDB storage engine: mmapv1 (default)</li></ul><h2 id=サンプルデータの準備>サンプルデータの準備</h2><h2 id=dbを用意>DBを用意</h2><pre><code>$ mongo
+
+&gt; use sample_db
+switched to db sample_db
+</code></pre><h2 id=サンプルデータ追加>サンプルデータ追加</h2><p>とりあえず10万件のドキュメントを生成しておきます。</p><pre><code>&gt; for (var i=0; i &lt; 100000; i++) {
+... db.items.insert({ name: 'item_' + i, price: 100 + i })
+... }
+
+&gt; db.items.count()
+100000
+</code></pre><h2 id=インデックスが無い状態>インデックスが無い状態</h2><p>itemsコレクションから119円の商品を探すクエリを実行します。</p><pre><code>&gt; db.items.find({price: 119}).explain(&quot;executionStats&quot;)
+{
+	&quot;queryPlanner&quot; : {
+		&quot;plannerVersion&quot; : 1,
+		&quot;namespace&quot; : &quot;sample_db.items&quot;,
+		&quot;indexFilterSet&quot; : false,
+		&quot;parsedQuery&quot; : {
+			&quot;price&quot; : {
+				&quot;$eq&quot; : 119
+			}
+		},
+		&quot;winningPlan&quot; : {
+			&quot;stage&quot; : &quot;COLLSCAN&quot;,
+			&quot;filter&quot; : {
+				&quot;price&quot; : {
+					&quot;$eq&quot; : 119
+				}
+			},
+			&quot;direction&quot; : &quot;forward&quot;
+		},
+		&quot;rejectedPlans&quot; : [ ]
+	},
+	&quot;executionStats&quot; : {
+		&quot;executionSuccess&quot; : true,
+		&quot;nReturned&quot; : 1,
+		&quot;executionTimeMillis&quot; : 59,
+		&quot;totalKeysExamined&quot; : 0,
+		&quot;totalDocsExamined&quot; : 100000,
+		&quot;executionStages&quot; : {
+			&quot;stage&quot; : &quot;COLLSCAN&quot;,
+			&quot;filter&quot; : {
+				&quot;price&quot; : {
+					&quot;$eq&quot; : 119
+				}
+			},
+			&quot;nReturned&quot; : 1,
+			&quot;executionTimeMillisEstimate&quot; : 20,
+			&quot;works&quot; : 100002,
+			&quot;advanced&quot; : 1,
+			&quot;needTime&quot; : 100000,
+			&quot;needFetch&quot; : 0,
+			&quot;saveState&quot; : 781,
+			&quot;restoreState&quot; : 781,
+			&quot;isEOF&quot; : 1,
+			&quot;invalidates&quot; : 0,
+			&quot;direction&quot; : &quot;forward&quot;,
+			&quot;docsExamined&quot; : 100000
+		}
+	},
+	&quot;serverInfo&quot; : {
+		&quot;host&quot; : &quot;MacBook-Pro.local&quot;,
+		&quot;port&quot; : 27017,
+		&quot;version&quot; : &quot;3.0.2&quot;,
+		&quot;gitVersion&quot; : &quot;nogitversion&quot;
+	},
+	&quot;ok&quot; : 1
+}
+</code></pre><p>まずは <code>queryPlannner.winningPlan</code> に着目します。<code>"stage": "COLLSCAN"</code> となっています。
+これは MongoDB 2.x の時の <code>BasicCursor</code> に相当します。</p><p>インデックスを使わずに全走査してることがわかります。</p><p>※ COLLSCAN => COLLECTION SCAN</p><p>実際に走査対象となったドキュメント数やクエリにかかった時間は
+<code>queryPlannner.executionStats</code> を確認します。</p><table><thead><tr><th>項目</th><th>説明</th><th>値</th></tr></thead><tbody><tr><td>&ldquo;nReturned&rdquo;: 1</td><td>見つかったドキュメント数</td><td>1</td></tr><tr><td>&ldquo;executionTimeMillis&rdquo;: 59</td><td>59</td><td>59 msec</td></tr><tr><td>&ldquo;totalKeysExamined&rdquo;: 0</td><td>検索したインデックス数</td><td>0</td></tr><tr><td>&ldquo;totalDocsExamined&rdquo;: 100000</td><td>検索したドキュメント数</td><td>100000</td></tr></tbody></table><p><code>totalDocsExamined</code> からも全ドキュメントが検索対象だったことがわかりますね</p><p>※ インデックス生成してないので当たり前ですが</p><h2 id=インデックス生成後>インデックス生成後</h2><p>それではインデックスを生成してみます。</p><pre><code>&gt; db.items.createIndex({ price: 1 })
+{
+	&quot;createdCollectionAutomatically&quot; : false,
+	&quot;numIndexesBefore&quot; : 1,
+	&quot;numIndexesAfter&quot; : 2,
+	&quot;ok&quot; : 1
+}
+
+&gt; db.items.getIndexes()
+[
+	{
+		&quot;v&quot; : 1,
+		&quot;key&quot; : {
+			&quot;_id&quot; : 1
+		},
+		&quot;name&quot; : &quot;_id_&quot;,
+		&quot;ns&quot; : &quot;sample_db.items&quot;
+	},
+	{
+		&quot;v&quot; : 1,
+		&quot;key&quot; : {
+			&quot;price&quot; : 1
+		},
+		&quot;name&quot; : &quot;price_1&quot;,
+		&quot;ns&quot; : &quot;sample_db.items&quot;
+	}
+]
+</code></pre><p><code>price_1</code> という名前の priceフィールド昇順 のインデックスができました。</p><p>追記</p><blockquote><p>db.collection.ensureIndex() は MongoDB 3.0.0 で deprecated と
+なりましたので db.collection.createIndex() に書き直しました。</p></blockquote><p>参考: <a href=http://docs.mongodb.org/manual/reference/method/db.collection.ensureIndex/#db.collection.ensureIndex target=_blank>db.collection.ensureIndex()</a></p><p>再度、items コレクションから119円の商品を探すクエリを実行します。</p><pre><code>&gt; db.items.find({price: 119}).explain(&quot;executionStats&quot;)
+{
+	&quot;queryPlanner&quot; : {
+		&quot;plannerVersion&quot; : 1,
+		&quot;namespace&quot; : &quot;sample_db.items&quot;,
+		&quot;indexFilterSet&quot; : false,
+		&quot;parsedQuery&quot; : {
+			&quot;price&quot; : {
+				&quot;$eq&quot; : 119
+			}
+		},
+		&quot;winningPlan&quot; : {
+			&quot;stage&quot; : &quot;FETCH&quot;,
+			&quot;inputStage&quot; : {
+				&quot;stage&quot; : &quot;IXSCAN&quot;,
+				&quot;keyPattern&quot; : {
+					&quot;price&quot; : 1
+				},
+				&quot;indexName&quot; : &quot;price_1&quot;,
+				&quot;isMultiKey&quot; : false,
+				&quot;direction&quot; : &quot;forward&quot;,
+				&quot;indexBounds&quot; : {
+					&quot;price&quot; : [
+						&quot;[119.0, 119.0]&quot;
+					]
+				}
+			}
+		},
+		&quot;rejectedPlans&quot; : [ ]
+	},
+	&quot;executionStats&quot; : {
+		&quot;executionSuccess&quot; : true,
+		&quot;nReturned&quot; : 1,
+		&quot;executionTimeMillis&quot; : 13,
+		&quot;totalKeysExamined&quot; : 1,
+		&quot;totalDocsExamined&quot; : 1,
+		&quot;executionStages&quot; : {
+			&quot;stage&quot; : &quot;FETCH&quot;,
+			&quot;nReturned&quot; : 1,
+			&quot;executionTimeMillisEstimate&quot; : 0,
+			&quot;works&quot; : 2,
+			&quot;advanced&quot; : 1,
+			&quot;needTime&quot; : 0,
+			&quot;needFetch&quot; : 0,
+			&quot;saveState&quot; : 0,
+			&quot;restoreState&quot; : 0,
+			&quot;isEOF&quot; : 1,
+			&quot;invalidates&quot; : 0,
+			&quot;docsExamined&quot; : 1,
+			&quot;alreadyHasObj&quot; : 0,
+			&quot;inputStage&quot; : {
+				&quot;stage&quot; : &quot;IXSCAN&quot;,
+				&quot;nReturned&quot; : 1,
+				&quot;executionTimeMillisEstimate&quot; : 0,
+				&quot;works&quot; : 2,
+				&quot;advanced&quot; : 1,
+				&quot;needTime&quot; : 0,
+				&quot;needFetch&quot; : 0,
+				&quot;saveState&quot; : 0,
+				&quot;restoreState&quot; : 0,
+				&quot;isEOF&quot; : 1,
+				&quot;invalidates&quot; : 0,
+				&quot;keyPattern&quot; : {
+					&quot;price&quot; : 1
+				},
+				&quot;indexName&quot; : &quot;price_1&quot;,
+				&quot;isMultiKey&quot; : false,
+				&quot;direction&quot; : &quot;forward&quot;,
+				&quot;indexBounds&quot; : {
+					&quot;price&quot; : [
+						&quot;[119.0, 119.0]&quot;
+					]
+				},
+				&quot;keysExamined&quot; : 1,
+				&quot;dupsTested&quot; : 0,
+				&quot;dupsDropped&quot; : 0,
+				&quot;seenInvalidated&quot; : 0,
+				&quot;matchTested&quot; : 0
+			}
+		}
+	},
+	&quot;serverInfo&quot; : {
+		&quot;host&quot; : &quot;MacBook-Pro.local&quot;,
+		&quot;port&quot; : 27017,
+		&quot;version&quot; : &quot;3.0.2&quot;,
+		&quot;gitVersion&quot; : &quot;nogitversion&quot;
+	},
+	&quot;ok&quot; : 1
+}
+</code></pre><p><code>queryPlannner.winningPlan</code> を確認します。 <code>"stage": "IXSCAN"</code> に変わりました。
+これは MongoDB 2.x の時の <code>BtreeCursor</code> に相当します。
+INDEXを使用していることがわかります :)</p><p>※ IXSCAN => INDEX SCAN</p><p>ここでまた、 <code>queryPlannner.executionStats</code> を確認します。</p><table><thead><tr><th>項目</th><th>説明</th><th>値</th></tr></thead><tbody><tr><td>&ldquo;nReturned&rdquo;: 1</td><td>見つかったドキュメント数</td><td>1</td></tr><tr><td>&ldquo;executionTimeMillis&rdquo;: 13</td><td>13</td><td>13 msec</td></tr><tr><td>&ldquo;totalKeysExamined&rdquo;: 1</td><td>検索したインデックス数</td><td>1</td></tr><tr><td>&ldquo;totalDocsExamined&rdquo;: 1</td><td>検索したドキュメント数</td><td>1</td></tr></tbody></table><p>1ドキュメントを検索するための検索対象ドキュメントが1となり理想的ではないでしょうか :)</p><h2 id=おわりに>おわりに</h2><p>最低限見ておきたい項目について、インデックスの生成前後での差分を見てみました。
+実際の運用においては1コレクションに1インデックスという事は少なく、複数のインデックスや
+複合キーインデックスが生成されていると思います。</p><p>そうすると今回見ていった項目以外にも <code>rejectedPlans</code> で採用されなかったインデックスを確認したり
+ソート指定した場合のインデックスの使われ方を確認したりといった事が必要となるでしょう。</p><p>それぞれの項目の説明についてはまた別途まとめましょうか。</p><h2 id=参考>参考</h2><p><a href=http://docs.mongodb.org/manual/reference/explain-results/ target=_blank>Explain Results - MongoDB Manual 3.0.2</a></p></div></article><div class="license markdown-body"><blockquote><p>Unless otherwise noted, the content of this site is licensed under <a rel=license href target=_blank></a>.</p></blockquote></div></div><div class="col-md-3 col-12 float-left link-alter" id=sidebar><div class=widget-toc><h5>TOC</h5><nav id=TableOfContents><ul><li><a href=#はじめに>はじめに</a></li><li><a href=#環境>環境</a></li><li><a href=#サンプルデータの準備>サンプルデータの準備</a></li><li><a href=#dbを用意>DBを用意</a></li><li><a href=#サンプルデータ追加>サンプルデータ追加</a></li><li><a href=#インデックスが無い状態>インデックスが無い状態</a></li><li><a href=#インデックス生成後>インデックス生成後</a></li><li><a href=#おわりに>おわりに</a></li><li><a href=#参考>参考</a></li></ul></nav></div><div class=widget-pages><h5>Pages</h5><ul><li><a href=/index.xml target=_blank>RSS</a></li></ul></div><div class=widget-tags><h5>Tags</h5><div></div></div><div class=widget-links><h5>Links</h5><ul></ul></div></div></div></main><footer><div class="container-lg text-center"><p>&copy; 2020 <a href=https://blog.mknkisk.com/></a>| Powered by <a href=https://github.com/amzrk2/hugo-theme-fuji/ target=_blank>Fuji</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></p></div></footer><script>$(function(){mediumZoom('.img-zoomable',{margin:32});});</script><script>$('.widget-toc a').click(function(){$('html, body').animate({scrollTop:$($(this).attr('href')).offset().top});});</script></body></html>

@@ -1,0 +1,58 @@
+<!doctype html><html lang=en><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=HandheldFriendly content="True"><meta http-equiv=x-ua-compatible content="IE=edge"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=generator content="Hugo 0.68.3"><link rel="shortcut icon" href=https://cdn.jsdelivr.net/gh/amzrk2/poal-jsdelivr@1.2.0/favicons/favicon.ico><title>jqコマンドを使ってみた - mknkisk.log</title><meta name=author content><meta name=description content="jqコマンドなるものがあるそうなので入れてみました。
+ jq - GitHub Pages  参考にさせて頂いたのはこちらの記事です。
+ jqコマンドが実は高性能すぎてビビッた話  jqはコマンドラインでJSONデータを扱うのに便利なコマンドです。
+ jq is a lightweight and flexible command-line JSON processor.
+ インストール  MacBook Air Mid 2011 Mac OS X 10.8.4 Homebrew 0.9.4 jq version 1.3  Mac なら homebrew を使うのが簡単そうです。
+$ brew search jq jq $ brew install jq $ jq --version jq version 1.3 これで終わりです。簡単ですね。 ソースコードからのビルドやLinux, Windowsに関しては 公式ドキュメント をご覧ください。
+サンプルのJSONを用意する JSONファイルを用意します。 jqの動きをざっと知りたいので簡素なJSONを。
+$ cat sample.json {&#34;items&#34;:[{&#34;name&#34;:&#34;kirino&#34;},{&#34;name&#34;:&#34;kuroneko&#34;}]} 改行もインデントも無いフラットなJSONです。"><meta property="og:title" content="jqコマンドを使ってみた"><meta property="og:description" content="jqコマンドなるものがあるそうなので入れてみました。
+ jq - GitHub Pages  参考にさせて頂いたのはこちらの記事です。
+ jqコマンドが実は高性能すぎてビビッた話  jqはコマンドラインでJSONデータを扱うのに便利なコマンドです。
+ jq is a lightweight and flexible command-line JSON processor.
+ インストール  MacBook Air Mid 2011 Mac OS X 10.8.4 Homebrew 0.9.4 jq version 1.3  Mac なら homebrew を使うのが簡単そうです。
+$ brew search jq jq $ brew install jq $ jq --version jq version 1.3 これで終わりです。簡単ですね。 ソースコードからのビルドやLinux, Windowsに関しては 公式ドキュメント をご覧ください。
+サンプルのJSONを用意する JSONファイルを用意します。 jqの動きをざっと知りたいので簡素なJSONを。
+$ cat sample.json {&#34;items&#34;:[{&#34;name&#34;:&#34;kirino&#34;},{&#34;name&#34;:&#34;kuroneko&#34;}]} 改行もインデントも無いフラットなJSONです。"><meta property="og:type" content="article"><meta property="og:url" content="https://blog.mknkisk.com/posts/jq-command/"><meta property="article:published_time" content="2013-06-28T02:03:00+09:00"><meta property="article:modified_time" content="2013-06-28T02:03:00+09:00"><meta name=twitter:card content="summary"><meta name=twitter:title content="jqコマンドを使ってみた"><meta name=twitter:description content="jqコマンドなるものがあるそうなので入れてみました。
+ jq - GitHub Pages  参考にさせて頂いたのはこちらの記事です。
+ jqコマンドが実は高性能すぎてビビッた話  jqはコマンドラインでJSONデータを扱うのに便利なコマンドです。
+ jq is a lightweight and flexible command-line JSON processor.
+ インストール  MacBook Air Mid 2011 Mac OS X 10.8.4 Homebrew 0.9.4 jq version 1.3  Mac なら homebrew を使うのが簡単そうです。
+$ brew search jq jq $ brew install jq $ jq --version jq version 1.3 これで終わりです。簡単ですね。 ソースコードからのビルドやLinux, Windowsに関しては 公式ドキュメント をご覧ください。
+サンプルのJSONを用意する JSONファイルを用意します。 jqの動きをざっと知りたいので簡素なJSONを。
+$ cat sample.json {&#34;items&#34;:[{&#34;name&#34;:&#34;kirino&#34;},{&#34;name&#34;:&#34;kuroneko&#34;}]} 改行もインデントも無いフラットなJSONです。"><link rel=stylesheet href=https://blog.mknkisk.com/css/main.min.css><script src=https://blog.mknkisk.com/js/jquery.min.js></script><script src=https://blog.mknkisk.com/js/lazysizes.min.js></script><link rel=stylesheet href=https://blog.mknkisk.com/css/fontawsome.min.css><script src=https://blog.mknkisk.com/js/medium-zoom.min.js></script><body class="d-flex flex-column h-100"><header><div class="container-lg clearfix"><div class="col-12 link-primary"><a class=main-title href=https://blog.mknkisk.com/>mknkisk.log</a></div></div></header><main><div class="container-lg clearfix"><div class="col-md-9 col-12 float-left" id=content><article><h4 class=post-title><a href=https://blog.mknkisk.com/posts/jq-command/>jqコマンドを使ってみた</a></h4><div class="post-meta link-alter"><time><i class="fas fa-calendar-day"></i>&nbsp;2013-06-28</time><span><i class="fas fa-tag"></i>&nbsp;No tag</span></div><div class="post-content markdown-body"><p>jqコマンドなるものがあるそうなので入れてみました。</p><ul><li><a href=http://stedolan.github.io/jq/ target=_blank>jq - GitHub Pages</a></li></ul><p>参考にさせて頂いたのはこちらの記事です。</p><ul><li><a href=http://beatsync.net/main/log20130428.html target=_blank>jqコマンドが実は高性能すぎてビビッた話</a></li></ul><p>jqはコマンドラインでJSONデータを扱うのに便利なコマンドです。</p><blockquote><p>jq is a lightweight and flexible command-line JSON processor.</p></blockquote><h2 id=インストール>インストール</h2><ul><li>MacBook Air Mid 2011</li><li>Mac OS X 10.8.4</li><li>Homebrew 0.9.4</li><li>jq version 1.3</li></ul><p>Mac なら homebrew を使うのが簡単そうです。</p><pre><code>$ brew search jq
+jq
+$ brew install jq
+$ jq --version
+jq version 1.3
+</code></pre><p>これで終わりです。簡単ですね。
+ソースコードからのビルドやLinux, Windowsに関しては <a href=http://stedolan.github.io/jq/download/ target=_blank>公式ドキュメント</a> をご覧ください。</p><h2 id=サンプルのjsonを用意する>サンプルのJSONを用意する</h2><p>JSONファイルを用意します。
+jqの動きをざっと知りたいので簡素なJSONを。</p><pre><code>$ cat sample.json
+{&quot;items&quot;:[{&quot;name&quot;:&quot;kirino&quot;},{&quot;name&quot;:&quot;kuroneko&quot;}]}
+</code></pre><p>改行もインデントも無いフラットなJSONです。</p><h2 id=jqを使ってみる>jqを使ってみる</h2><p>用意したサンプルのJSONファイルを使ってjqの動きを確認してみます。</p><h2 id=json全体を読みやすく変換>JSON全体を読みやすく変換</h2><p>&ldquo;.&rdquo; を指定すると入力で与えられたJSONを全て出力します。</p><pre><code>$ cat sample.json | jq &quot;.&quot;
+{
+  &quot;items&quot;: [
+    {
+      &quot;name&quot;: &quot;kirino&quot;
+    },
+    {
+      &quot;name&quot;: &quot;kuroneko&quot;
+    }
+  ]
+}
+</code></pre><p>おぉ!!改行, インデントされて非常に見やすくなりました。
+さらにコンソール出力するとデフォルトでシンタックスハイライトされます。
+ハイライトをオフにする場合は -M オプションを指定します。</p><h2 id=フィルターを使う>フィルターを使う</h2><p>jqの便利なところの1つに入力されたJSONから指定したプロパティのみ取得できることがあります。
+サンプルのJSONから items の 2つめの要素のみ出力してみましょう。</p><p>&ldquo;.items[1]&rdquo; を指定します。</p><pre><code>$ cat sample.json | jq &quot;.items[1]&quot;
+{
+  &quot;name&quot;: &quot;kuroneko&quot;
+}
+</code></pre><p>次に指定したプロパティの値のみ出力してみます。</p><pre><code>$ cat sample.json |jq &quot;.items[].name&quot;
+&quot;kirino&quot;
+&quot;kuroneko&quot;
+</code></pre><h2 id=おわりに>おわりに</h2><p>基礎の基礎のみ紹介しました。自分のための備忘録です。
+jq には他にもJSONオブジェクトを生成したり計算させたり、関数を使うこともできます。
+<a href=http://stedolan.github.io/jq/manual/ target=_blank>公式マニュアル</a> には凡例つきで非常に丁寧に説明されているのでぜひご覧下さい。</p><p>JSONは python などでも簡単に扱うことができますが curl などで Web API から取得した
+JSON の結果をちょっと確認したい。みたいな時には便利そうです。
+複雑なフィルター条件になってきたら python などでパースするようにすると良さそうです。</p><p>実際に使う機会があればまた書こうと思います。</p><p>余談
+<a href=http://www.oreimo-anime.com/ target=_blank>俺妹</a>もTV放送は最終回ですか :'-(
+8月の最終話配信を楽しみにしたいと思います :-D</p></div></article><div class="license markdown-body"><blockquote><p>Unless otherwise noted, the content of this site is licensed under <a rel=license href target=_blank></a>.</p></blockquote></div></div><div class="col-md-3 col-12 float-left link-alter" id=sidebar><div class=widget-toc><h5>TOC</h5><nav id=TableOfContents><ul><li><a href=#インストール>インストール</a></li><li><a href=#サンプルのjsonを用意する>サンプルのJSONを用意する</a></li><li><a href=#jqを使ってみる>jqを使ってみる</a></li><li><a href=#json全体を読みやすく変換>JSON全体を読みやすく変換</a></li><li><a href=#フィルターを使う>フィルターを使う</a></li><li><a href=#おわりに>おわりに</a></li></ul></nav></div><div class=widget-pages><h5>Pages</h5><ul><li><a href=/index.xml target=_blank>RSS</a></li></ul></div><div class=widget-tags><h5>Tags</h5><div></div></div><div class=widget-links><h5>Links</h5><ul></ul></div></div></div></main><footer><div class="container-lg text-center"><p>&copy; 2020 <a href=https://blog.mknkisk.com/></a>| Powered by <a href=https://github.com/amzrk2/hugo-theme-fuji/ target=_blank>Fuji</a> & <a href=https://gohugo.io/ target=_blank>Hugo</a></p></div></footer><script>$(function(){mediumZoom('.img-zoomable',{margin:32});});</script><script>$('.widget-toc a').click(function(){$('html, body').animate({scrollTop:$($(this).attr('href')).offset().top});});</script></body></html>
