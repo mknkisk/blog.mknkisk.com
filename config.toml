@@ -3,3 +3,7 @@ languageCode = "ja"
 title = "mknkisk.log"
 theme = "fuji"
 googleAnalytics = "UA-42113411-10"
+[sitemap]
+  changefreq = "monthly"
+  filename = "sitemap.xml"
+  priority = 0.5
